@@ -1,0 +1,12 @@
+---
+
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: Set hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+    - name: Gathering facts
+      setup:
+
+- import_playbook: _kubernetes.yml
