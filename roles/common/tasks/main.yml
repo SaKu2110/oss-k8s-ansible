@@ -21,5 +21,17 @@
 - name: Letting iptables see bridged traffic
   import_tasks: iptables.yml
 
+- name: Verify br_netfilter module path exists
+  file:
+    path: /etc/modules-load.d
+    state: directory
+
+- include: crio_module.yml
+  with_items:
+    - name: overlay
+    - name: br_netfilter
+  loop_control:
+    loop_var: module
+
 - name: Disables swap for Kubernetes node
   import_tasks: swapoff.yml
