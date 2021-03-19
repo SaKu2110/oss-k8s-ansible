@@ -12,15 +12,21 @@
 
 - name: Enable br_netfilter module
   modprobe:
-    name: br_netfilter
+    name: "{{ item }}"
     state: present
   when: modinfo_br_netfilter.rc == 0
+  with_items:
+    - overlay
+    - br_netfilter
 
 - name: Persist br_netfilter module
   copy:
     dest: /etc/modules-load.d/crio.conf
-    content: br_netfilter
+    content: "{{ item }}"
   when: modinfo_br_netfilter.rc == 0
+  with_items:
+    - overlay
+    - br_netfilter
 
 - name: Check if bridge-nf-call-iptables key exists
   command: "sysctl net.bridge.bridge-nf-call-iptables"

@@ -20,3 +20,6 @@
 
 - name: Letting iptables see bridged traffic
   import_tasks: iptables.yml
+
+- name: Disables swap for Kubernetes node
+  import_tasks: swapoff.yml
