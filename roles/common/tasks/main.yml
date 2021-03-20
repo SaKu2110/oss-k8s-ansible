@@ -11,12 +11,5 @@
     name: editor
     path: /usr/bin/vim.basic
 
-- name: Install apt-transport-https
-  package:
-    name: apt-transport-https
-    state: present
-  register: result
-  until: result is succeeded
-
 - name: Disables swap for Kubernetes node
   import_tasks: swapoff.yml

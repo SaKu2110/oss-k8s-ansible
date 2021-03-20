@@ -1,4 +1,11 @@
 ---
-- hosts: k8s-vm-instance
+- hosts: k8s-master
   roles:
+    - kubernetes/common
+    - kubernetes/kubectl
+    - crio
+
+- hosts: k8s-node
+  roles:
+    - kubernetes/common
     - crio
