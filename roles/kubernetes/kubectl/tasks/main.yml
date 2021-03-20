@@ -1,0 +1,6 @@
+---
+- name: Install kubectl
+  get_url:
+    url: "{{ kubectl__binary_path }}"
+    dest: /usr/local/bin/kubectl
+    mode: '0644'

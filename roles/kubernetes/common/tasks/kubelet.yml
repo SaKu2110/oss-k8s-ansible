@@ -1,0 +1,24 @@
+---
+- name: Install kubelet
+  apt:
+    name: "kubelet={{ kubernetes__version }}"
+    state: present
+  register: result
+  until: result is succeeded
+
+- name: Create kubelet config directory
+  file:
+    path: /var/lib/kubelet/
+    state: directory
+  register: result
+  until: result is succeeded
+
+- name: Place kubelet config file
+  blockinfile:
+    path: "{{ kubelet__config_path }}/config.yaml"
+    create: yes
+    block: "{{ kubelet__config }}"
+  register: result
+  until: result is succeeded
+  notify:
+    - restart_kubelet

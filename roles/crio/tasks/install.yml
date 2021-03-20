@@ -40,7 +40,7 @@
     apt:
       update_cache: yes
 
-  - name: Install CRI-o
+  - name: Install CRI-O
     package:
       name: "{{ item }}"
       state: present
