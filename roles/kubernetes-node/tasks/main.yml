@@ -1,0 +1,3 @@
+---
+- name: Create cluster join tool
+  import_tasks: join_cluster.yml

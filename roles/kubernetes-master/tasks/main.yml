@@ -1,0 +1,6 @@
+---
+- name: Install kubelet and setup
+  import_tasks: create_cluster.yml
+
+- name: Create cluster join tool
+  import_tasks: cluster_join_tool.yml
