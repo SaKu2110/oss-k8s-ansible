@@ -14,9 +14,6 @@ k8s-vm-master
 [k8s-node:children]
 k8s-vm-node
 
-[cri-o:children]
-k8s-vm-node
-
 [k8s-vm-instance:children]
 k8s-vm-master
 k8s-vm-node

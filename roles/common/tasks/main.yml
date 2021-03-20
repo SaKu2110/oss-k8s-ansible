@@ -13,3 +13,6 @@
 
 - name: Disables swap for Kubernetes node
   import_tasks: swapoff.yml
+
+- name: Set hosts
+  import_tasks: hosts.yml

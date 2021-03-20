@@ -2,10 +2,10 @@
 kubernetes__version: "1.20.0"
 kubernetes__advertise_addr: "{{ ansible_host }}"
 kubernetes__pod_network_cidr: "10.244.0.0/16"
-kubernetes__service_cidr: "10.244.0.0/16"
 
 kubernetes__setup_script: |
   #!/bin/sh
   mkdir -p $HOME/.kube
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml

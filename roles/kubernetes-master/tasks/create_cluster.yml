@@ -3,7 +3,6 @@
   shell: |
     kubeadm init --pod-network-cidr={{ kubernetes__pod_network_cidr }} \
     --apiserver-advertise-address={{ kubernetes__advertise_addr }} \
-    --service-cidr={{ kubernetes__service_cidr }} \
     --kubernetes-version={{ kubernetes__version }}
   register: result
   until: result is succeeded
