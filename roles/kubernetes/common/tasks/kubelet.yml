@@ -13,12 +13,14 @@
   register: result
   until: result is succeeded
 
-- name: Place kubelet config file
-  blockinfile:
-    path: "{{ kubelet__config_path }}/config.yaml"
+- name: Place kubelet cgroup driver config file
+  lineinfile:
+    path: "{{ kubelet__config_path }}"
     create: yes
-    block: "{{ kubelet__config }}"
+    line: "{{ kubelet__config_option }}"
   register: result
   until: result is succeeded
   notify:
     - restart_kubelet
+
+- meta: flush_handlers

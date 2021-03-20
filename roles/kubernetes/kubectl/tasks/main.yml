@@ -3,4 +3,6 @@
   get_url:
     url: "{{ kubectl__binary_path }}"
     dest: /usr/local/bin/kubectl
-    mode: '0644'
+    mode: '0755'
+  register: result
+  until: result is succeeded

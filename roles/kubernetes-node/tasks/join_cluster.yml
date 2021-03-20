@@ -1,0 +1,21 @@
+---
+- name: Place file to join kubernetes cluster
+  copy:
+    src: k8s_cluster_join.sh
+    dest: /tmp/k8s_cluster_join.sh
+    mode: '0755'
+  register: result
+  until: result is succeeded
+
+- name: Join kubernetes Cluster
+  shell:
+    cmd: /tmp/k8s_cluster_join.sh
+  register: result
+  until: result is succeeded
+
+- name: Remove shell
+  file:
+    path: /tmp/k8s_cluster_join.sh
+    state: absent
+  register: result
+  until: result is succeeded

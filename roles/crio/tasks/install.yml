@@ -55,5 +55,7 @@
       line: mountopt = "nodev"
     notify:
       - restart_crio
+  
+  - meta: flush_handlers
 
   when: dpkg_search_crio.rc == 1
