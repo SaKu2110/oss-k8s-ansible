@@ -1,0 +1,26 @@
+---
+- name: Install kubelet
+  apt:
+    name: "kubelet={{ kubernetes__version }}"
+    state: present
+  register: result
+  until: result is succeeded
+
+- name: Create kubelet config directory
+  file:
+    path: /var/lib/kubelet/
+    state: directory
+  register: result
+  until: result is succeeded
+
+- name: Place kubelet cgroup driver config file
+  lineinfile:
+    path: "{{ kubelet__config_path }}"
+    create: yes
+    line: "{{ kubelet__config_option }}"
+  register: result
+  until: result is succeeded
+  notify:
+    - restart_kubelet
+
+- meta: flush_handlers

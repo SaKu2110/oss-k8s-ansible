@@ -1,0 +1,13 @@
+.vagrant
+*.retry
+ansible.log
+ansible.pass
+.idea
+vagrant/
+
+ubuntu-bionic-18.04-cloudimg-console.log
+
+# Ansible inventory
+inventory/production
+
+.DS_Store

@@ -1,0 +1,12 @@
+---
+kubernetes__package_dependencies:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+
+kubernetes__version: "1.20.0-00"
+kubernetes__apt_key: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+kubernetes__apt_repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+
+kubelet__config_option: "KUBELET_EXTRA_ARGS=--cgroup-driver=systemd"
+kubelet__config_path: "/etc/default/kubelet"

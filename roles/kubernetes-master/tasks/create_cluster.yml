@@ -1,0 +1,19 @@
+---
+- name: Create k8s cluster
+  shell: |
+    kubeadm init --pod-network-cidr={{ kubernetes__pod_network_cidr }} \
+    --apiserver-advertise-address={{ kubernetes__advertise_addr }} \
+    --kubernetes-version={{ kubernetes__version }}
+  register: result
+  until: result is succeeded
+
+- name: Create setup script to exec kubectl
+  copy:
+    dest: "{{ playbook_dir }}/kubectl_setup.sh"
+    content: "{{ kubernetes__setup_script }}"
+    mode: '0755'
+  become: false
+  run_once: true
+  delegate_to: localhost
+  register: result
+  until: result is succeeded
