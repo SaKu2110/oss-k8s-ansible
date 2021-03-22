@@ -1,3 +1,11 @@
 ---
+- name: Check if cluster join shell exists
+  find:
+    paths: /etc/kubernetes
+    patterns: 'k8s_join_*.sh'
+    file_type: file
+  register: cluster_join_shell
+
 - name: Create cluster join tool
   import_tasks: join_cluster.yml
+  when: cluster_join_shell.matched == 0
