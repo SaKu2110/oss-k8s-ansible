@@ -1,21 +1,14 @@
 ---
 - name: Place file to join kubernetes cluster
   copy:
-    src: k8s_cluster_join.sh
-    dest: /tmp/k8s_cluster_join.sh
+    src: "k8s_join_{{ lookup('pipe','date +%Y%m%d') }}.sh"
+    dest: "/etc/kubernetes/k8s_join_{{ lookup('pipe','date +%Y%m%d') }}.sh"
     mode: '0755'
   register: result
   until: result is succeeded
 
 - name: Join kubernetes Cluster
   shell:
-    cmd: /tmp/k8s_cluster_join.sh
-  register: result
-  until: result is succeeded
-
-- name: Remove shell
-  file:
-    path: /tmp/k8s_cluster_join.sh
-    state: absent
+    cmd: "/etc/kubernetes/k8s_join_{{ lookup('pipe','date +%Y%m%d') }}.sh"
   register: result
   until: result is succeeded

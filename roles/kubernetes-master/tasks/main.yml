@@ -1,6 +1,20 @@
 ---
+- name: Check if k8s cluster is built
+  stat:
+    path: /etc/kubernetes/admin.conf
+  register: kubernetes_admin_conf
+
 - name: Install kubelet and setup
   import_tasks: create_cluster.yml
+  when: kubernetes_admin_conf.stat.exists == False
+
+- name: Check if cluster join shell exists
+  stat:
+    path: "{{ playbook_dir }}/roles/kubernetes-node/files/*.sh"
+  become: false
+  delegate_to: localhost
+  register: cluster_join_shell
 
 - name: Create cluster join tool
   import_tasks: cluster_join_tool.yml
+  when: cluster_join_shell.stat.exists == False
