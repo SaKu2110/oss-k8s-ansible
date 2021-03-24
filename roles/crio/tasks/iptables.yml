@@ -8,8 +8,8 @@
 - name: "Enable {{ net_bridge_key }} tables"
   sysctl:
     name: "{{ net_bridge_key }}"
-    state: present
     sysctl_file: "{{ sysctl_file_path }}"
+    state: present
     value: "1"
     reload: yes
-  when: sysctl_bridge_nf_call_iptables.rc == 0
+  when: sysctl_bridge_nf_call_iptables.stdout.find("= 1") == -1

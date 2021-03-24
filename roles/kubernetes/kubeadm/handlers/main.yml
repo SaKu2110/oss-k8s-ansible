@@ -7,3 +7,9 @@
     enabled: yes
   listen:
     - restart_kubelet
+
+- name: apt update
+  apt:
+    update_cache: yes
+  listen:
+    - apt_update

@@ -12,6 +12,7 @@
     dest: "{{ playbook_dir }}/kubectl_setup.sh"
     content: "{{ kubernetes__setup_script }}"
     mode: '0755'
+  changed_when: False
   become: false
   run_once: true
   delegate_to: localhost

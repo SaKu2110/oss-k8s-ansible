@@ -19,7 +19,6 @@
     filename: "kubernetes.list"
   register: result
   until: result is succeeded
+  notify: apt_update
 
-- name: apt update
-  apt:
-    update_cache: yes
+- meta: flush_handlers
