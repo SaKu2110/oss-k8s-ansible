@@ -1,4 +1,4 @@
-sysctl_file_path: /etc/sysctl.d/99-sysctl.conf
+sysctl_file_path: /etc/sysctl.d/99-kubernetes-cri.conf
 
 # CRI-O Configration
 crio__version: "1.20"
