@@ -1,5 +1,5 @@
 ---
 dependencies:
   - crio
-  - kubernetes/common
-  - kubernetes/kubectl
+  - kubernetes/kubeadm
+  - kubernetes/control-plane

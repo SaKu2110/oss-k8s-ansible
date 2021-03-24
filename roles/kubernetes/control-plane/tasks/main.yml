@@ -1,0 +1,11 @@
+---
+- name: Check if kubectl exists
+  find:
+    paths: /usr/local/bin
+    patterns: 'kubectl'
+    file_type: file
+  register: kubectl_binary
+
+- name: Install kubectl binary
+  import_tasks: kubectl.yml
+  when: kubectl_binary.matched == 0
