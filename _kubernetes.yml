@@ -6,3 +6,7 @@
 - hosts: k8s-node
   roles:
     - kubernetes-node
+
+- hosts: control-plane
+  roles:
+    - control-plane

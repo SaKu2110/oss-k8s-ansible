@@ -1,0 +1,11 @@
+---
+
+- name: Create User
+  user:
+    name: "{{ k8s_ctrl_user__name }}"
+    password: "{{ k8s_ctrl_user__password }}"
+    shell: /bin/bash
+    createhome: yes
+    state: present
+  register: result
+  until: result is succeeded
