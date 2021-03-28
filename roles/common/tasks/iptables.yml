@@ -17,6 +17,6 @@
     name: "{{ item.name }}"
     path: "{{ item.path }}"
   with_items: "{{ iptables_legacy }}"
-  when: iptables_version.stdout.find('nf_tables') != -1
+  when: '"nf_table" in iptables_version.stdout'
   register: result
   until: result is succeeded
