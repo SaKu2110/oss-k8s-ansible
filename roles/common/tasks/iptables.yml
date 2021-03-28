@@ -1,0 +1,22 @@
+---
+- name: Install iptables legacy binary
+  apt:
+    pkg: "{{ iptables_legacy_binary }}"
+    state: present
+    update_cache: yes
+  register: result
+  until: result is succeeded
+
+- name: Check iptables version
+  command: iptables --version
+  register: iptables_version
+  changed_when: false
+
+- name: Switch to legacy version
+  alternatives:
+    name: "{{ item.name }}"
+    path: "{{ item.path }}"
+  with_items: "{{ iptables_legacy }}"
+  when: iptables_version.stdout.find('nf_tables') != -1
+  register: result
+  until: result is succeeded

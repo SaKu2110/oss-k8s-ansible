@@ -1,0 +1,8 @@
+---
+- name: Install k8s dependencies packages
+  apt:
+    pkg: "{{ k8s_ansible__package_dependencies }}"
+    state: present
+    update_cache: yes
+  register: result
+  until: result is succeeded

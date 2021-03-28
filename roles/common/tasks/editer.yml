@@ -1,0 +1,15 @@
+---
+- name: Install VIM
+  package:
+    name: vim
+    state: present
+    update_cache: yes
+  register: result
+  until: result is succeeded
+
+- name: Config default editor to VIM
+  alternatives:
+    name: editor
+    path: /usr/bin/vim.basic
+  register: result
+  until: result is succeeded
