@@ -1,0 +1,20 @@
+---
+- name: "Verify if {{ kernel_module }} exists"
+  command: "modinfo {{ kernel_module }}"
+  register: modinfo_kernel_module
+  failed_when: modinfo_kernel_module.rc not in [0, 1]
+  changed_when: false
+
+- name: "Enable {{ kernel_module }} module"
+  modprobe:
+    name: "{{ kernel_module }}"
+    state: present
+  register: result
+  until: result is succeeded
+
+- name: "Persist {{ kernel_module }} module"
+  copy:
+    dest: "/etc/modules-load.d/{{ kernel_module }}.conf"
+    content: "{{ kernel_module }}"
+  register: result
+  until: result is succeeded

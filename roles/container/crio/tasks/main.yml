@@ -1,0 +1,22 @@
+---
+- name: Verify module path exists
+  file:
+    path: /etc/modules-load.d
+    state: directory
+  register: result
+  until: result is succeeded
+
+- name: Loading Kernel Modules for container runtime
+  include: kernel_module.yml
+  with_items: "{{ crio__kernel_module_dependency }}"
+  loop_control:
+    loop_var: kernel_module
+
+- name: Set up Kernel Parameter for container runtime
+  include: kernel_parameter.yml
+  with_items: "{{ crio__kernel_parameter }}"
+  loop_control:
+    loop_var: kernel_parameter
+
+- name: Install CRI-O
+  import_tasks: install.yml

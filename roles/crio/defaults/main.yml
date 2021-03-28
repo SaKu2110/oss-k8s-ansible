@@ -1,9 +1,0 @@
-sysctl_file_path: /etc/sysctl.d/99-kubernetes-cri.conf
-
-# CRI-O Configration
-crio__version: "1.20"
-crio__debian_repo_name: "xUbuntu_18.04"
-crio__kubic_apt_repo: "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{ crio__debian_repo_name }}/ /"
-crio__kubic_crio_apt_repo: "deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/{{ crio__version }}/{{ crio__debian_repo_name }}/ /"
-crio__kubic_apt_key: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{ crio__debian_repo_name }}/Release.key"
-crio__kubic_crio_apt_key: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ crio__version }}/{{ crio__debian_repo_name }}/Release.key"
