@@ -16,3 +16,10 @@ crio__packages:
   - cri-o
   - cri-o-runc
   - skopeo
+
+# CNI plugin Configration
+cni_plugin__version: "0.9.1"
+cni_plugin__download_dir: /opt/cni/bin
+
+# crictl Confgiration
+crictl__version: "1.20.0"

@@ -1,0 +1,30 @@
+---
+- name: Verify if crictl exists
+  stat:
+    path: /usr/local/bin/crictl
+  register: crictl
+
+- block:
+  - name: Download crictl archive
+    get_url:
+      url: "https://github.com/kubernetes-sigs/cri-tools/releases/download/v{{ crictl__version }}/crictl-v{{ crictl__version }}-linux-amd64.tar.gz"
+      dest: /tmp
+    register: result
+    until: result is succeeded
+  
+  - name: Expand crictl archive
+    unarchive:
+      src: "/tmp/crictl-v{{ crictl__version }}-linux-amd64.tar.gz"
+      dest: /usr/local/bin
+      remote_src: yes
+    register: result
+    until: result is succeeded
+  
+  - name: Remove crictl archive
+    file:
+      path: "/tmp/crictl-v{{ crictl__version }}-linux-amd64.tar.gz"
+      state: absent
+    register: result
+    until: result is succeeded
+  
+  when: crictl.stat.exists == False

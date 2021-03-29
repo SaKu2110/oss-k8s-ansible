@@ -1,5 +1,5 @@
 ---
-- name: Verify module path exists
+- name: Verify if module path exists
   file:
     path: /etc/modules-load.d
     state: directory
@@ -20,3 +20,9 @@
 
 - name: Install CRI-O
   import_tasks: install.yml
+
+- name: Install CNI Plugin
+  import_tasks: cni.yml
+
+- name: Install crictl Command
+  import_tasks: crictl.yml
