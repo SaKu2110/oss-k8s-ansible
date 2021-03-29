@@ -1,4 +1,0 @@
----
-flannel__manifest: "kube-flannel.yml"
-flannel__manifest_url: "https://raw.githubusercontent.com/coreos/flannel/master/Documentation/{{ flannel__manifest }}"
-controller_home_dir: "/home/{{ k8s_ctrl_user__name }}"

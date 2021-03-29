@@ -1,5 +1,0 @@
----
-dependencies:
-  - crio
-  - kubernetes/kubeadm
-  - kubernetes/control-plane
