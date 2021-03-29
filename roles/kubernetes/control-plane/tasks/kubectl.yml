@@ -1,8 +1,14 @@
 ---
+- name: Check if kubectl exists
+  stat:
+    path: /usr/local/bin/kubectl
+  register: kubectl_binary
+
 - name: Install kubectl
   get_url:
-    url: "{{ kubectl__binary_path }}"
+    url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubernetes__release_version }}/bin/linux/amd64/kubectl"
     dest: /usr/local/bin/kubectl
     mode: '0755'
+  when: not kubectl_binary.stat.exists
   register: result
   until: result is succeeded

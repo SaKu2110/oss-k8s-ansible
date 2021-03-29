@@ -1,0 +1,12 @@
+---
+- name: Write kubelet systemd init file
+  template:
+    src: "kubelet.j2"
+    dest: /etc/default/kubelet
+    backup: yes
+  register: result
+  until: result is succeeded
+  notify:
+    - restart_kubelet
+
+- meta: flush_handlers

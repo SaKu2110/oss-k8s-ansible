@@ -1,3 +1,5 @@
 ---
-kubectl__version: "1.20.0"
-kubectl__binary_path: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl__version }}/bin/linux/amd64/kubectl"
+kubernetes__release_version: "1.20.5"
+kubernetes__version: "1.20.0"
+kubernetes__advertise_addr: "{{ ansible_host }}"
+kubernetes__pod_network_cidr: "10.244.0.0/16"

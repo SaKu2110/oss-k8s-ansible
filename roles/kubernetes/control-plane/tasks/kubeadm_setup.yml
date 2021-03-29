@@ -1,0 +1,50 @@
+---
+- name: Check if k8s cluster has already run
+  stat:
+    path: /etc/kubernetes/admin.conf
+  register: kubernetes_already_run
+
+- name: Create kubernetes cluster
+  command: |
+    kubeadm init --pod-network-cidr={{ kubernetes__pod_network_cidr }} \
+    --apiserver-advertise-address={{ kubernetes__advertise_addr }} \
+    --kubernetes-version={{ kubernetes__version }}
+  when: not kubernetes_already_run.stat.exists
+  register: result
+  until: result is succeeded
+
+- name: Create directory for the file module
+  file:
+    path: "{{ playbook_dir }}/roles/kubernetes/node/files"
+    state: directory
+  become: false
+  delegate_to: localhost
+  register: result
+  until: result is succeeded
+
+- name: Check if cluster join shell already exists
+  find:
+    paths: "{{ playbook_dir }}/roles/kubernetes/node/files"
+    patterns: 'k8s_join_*.sh'
+    file_type: file
+  become: no
+  delegate_to: localhost
+  register: cluster_join_shell
+
+- block:
+  - name: Get kubernetes cluster join command
+    command: kubeadm token create --print-join-command
+    changed_when: False
+    register: kubeadm_print_join_command
+    until: kubeadm_print_join_command is succeeded
+
+  - name: Write script to join kubernetes cluster
+    template:
+      src: cluster_join.sh.j2
+      dest: "{{ playbook_dir }}/roles/kubernetes/node/files/k8s_join_{{ lookup('pipe','date +%Y%m%d') }}.sh"
+    become: no
+    delegate_to: localhost
+    register: result
+    until: result is succeeded
+
+  when: cluster_join_shell.matched == 0

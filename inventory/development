@@ -1,12 +1,12 @@
 [all]
-test-1.fun.ac.jp ansible_ssh_host=192.0.2.101
-test-2.fun.ac.jp ansible_ssh_host=192.0.2.201
+test-1.saku ansible_ssh_host=192.0.2.101
+test-2.saku ansible_ssh_host=192.0.2.201
 
 [k8s-vm-master]
-test-1.fun.ac.jp
+test-1.saku
 
 [k8s-vm-node]
-test-2.fun.ac.jp
+test-2.saku
 
 [k8s-master:children]
 k8s-vm-master
@@ -15,7 +15,7 @@ k8s-vm-master
 k8s-vm-node
 
 [control-plane]
-test-1.fun.ac.jp
+test-1.saku
 
 [k8s-vm-instance:children]
 k8s-vm-master

@@ -1,0 +1,17 @@
+---
+- name: "Check if {{ kernel_parameter }} key exists"
+  command: "sysctl {{ kernel_parameter }}"
+  failed_when: false
+  changed_when: false
+  register: kernel_parameter_value
+
+- name: "Enable {{ kernel_parameter }} tables"
+  sysctl:
+    name: "{{ kernel_parameter }}"
+    sysctl_file: "{{ kernel_parameter }}"
+    state: present
+    value: "1"
+    reload: yes
+  when: '"= 1" not in kernel_parameter_value.stdout'
+  register: result
+  until: result is succeeded

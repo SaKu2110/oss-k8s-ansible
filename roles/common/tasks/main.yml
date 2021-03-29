@@ -1,15 +1,12 @@
 ---
-- name: Install VIM
-  package:
-    name: vim
-    state: present
-  register: result
-  until: result is succeeded
+- name: Install k8s dependencies packages
+  import_tasks: install.yml
 
-- name: Config default editor to VIM
-  alternatives:
-    name: editor
-    path: /usr/bin/vim.basic
+- name: Prevent iptables from using the nftables backend
+  import_tasks: iptables.yml
+
+- name: Install and Setup edieter
+  import_tasks: editer.yml
 
 - name: Disables swap for Kubernetes node
   import_tasks: swapoff.yml

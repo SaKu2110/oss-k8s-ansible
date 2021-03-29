@@ -1,0 +1,24 @@
+---
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+    update_cache: yes
+  register: result
+  until: result is succeeded
+
+- name: Install openshift
+  pip:
+    name: "openshift==0.11.0"
+    state: present
+    executable: /usr/bin/pip3
+  register: result
+  until: result is succeeded
+
+- name: Install kubernetes python client
+  pip:
+    name: "kubernetes==11.0.0"
+    state: present
+    executable: /usr/bin/pip3
+  register: result
+  until: result is succeeded

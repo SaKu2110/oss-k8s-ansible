@@ -1,0 +1,30 @@
+---
+- name: Add kubic apt key
+  apt_key:
+    url: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{ crio__debian_version }}/Release.key"
+    state: present
+  register: result
+  until: result is succeeded
+
+- name: Add kubic cri-o apt key
+  apt_key:
+    url: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ crio__version }}/{{ crio__debian_version }}/Release.key"
+    state: present
+  register: result
+  until: result is succeeded
+
+- name: Add kubic apt repo
+  apt_repository:
+    repo: "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{ crio__debian_version }}/ /"
+    state: present
+    filename: "devel:kubic:libcontainers:stable.list"
+  register: result
+  until: result is succeeded
+
+- name: Add kubic cri-o apt repo
+  apt_repository:
+    repo: "deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/{{ crio__version }}/{{ crio__debian_version }}/ /"
+    state: present
+    filename: "devel:kubic:libcontainers:stable:cri-o:{{ crio__version }}.list"
+  register: result
+  until: result is succeeded
