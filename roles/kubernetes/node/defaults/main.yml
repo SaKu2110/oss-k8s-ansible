@@ -1,0 +1,6 @@
+---
+# kubernetes Configration
+kubernetes__version: "1.20.0-00"
+
+# kubelet Configration
+kubelet__config_option: "--cgroup-driver=systemd"

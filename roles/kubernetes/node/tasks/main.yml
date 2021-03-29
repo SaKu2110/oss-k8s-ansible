@@ -1,0 +1,6 @@
+---
+- name: Install kubernetes tools
+  import_tasks: install.yml
+
+- name: Install kubelet and setup
+  import_tasks: kubelet.yml

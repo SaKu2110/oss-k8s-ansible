@@ -1,0 +1,19 @@
+---
+- name: Import kubernetes repository
+  import_tasks: repository.yml
+
+- name: Install kubelet
+  apt:
+    name: "kubelet={{ kubernetes__version }}"
+    state: present
+    update_cache: yes
+  register: result
+  until: result is succeeded
+
+- name: Install kubeadm
+  apt:
+    name: "kubeadm={{ kubernetes__version }}"
+    state: present
+    update_cache: yes
+  register: result
+  until: result is succeeded
