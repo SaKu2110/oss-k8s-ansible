@@ -32,7 +32,6 @@
   template:
     src: cluster_join.sh.j2
     dest: "{{ playbook_dir }}/roles/kubernetes/node/files/k8s_join_{{ lookup('pipe','date +%Y%m%d') }}.sh"
-    backup: yes
   become: no
   delegate_to: localhost
   register: result

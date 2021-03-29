@@ -4,3 +4,7 @@
 
 - name: Install kubelet and setup
   import_tasks: kubelet.yml
+
+- name: kubernetes cluster join
+  import_tasks: cluster_join.yml
+  when: k8s__role == "worker"
