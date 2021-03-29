@@ -1,0 +1,22 @@
+---
+- name: reload systemd and restart kubelet.service
+  command: /bin/true
+  notify:
+    - kubelet | reload systemd
+    - kubelet | reload kubelet
+  listen:
+    - restart_kubelet
+
+- name: kubelet | reload systemd
+  systemd:
+    daemon_reload: yes
+  register: result
+  until: result is succeeded
+
+- name: kubelet | reload kubelet
+  service:
+    name: kubelet.service
+    state: restarted
+    enabled: yes
+  register: result
+  until: result is succeeded

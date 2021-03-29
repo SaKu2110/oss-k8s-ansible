@@ -1,0 +1,37 @@
+---
+- name: Verify if plugin directory exists
+  stat:
+    path: "{{ cni_plugin__download_dir }}"
+  register: opt_cni_bin
+
+- block:
+  - name: Create plugin directory
+    file:
+      path: "{{ cni_plugin__download_dir }}"
+      state: directory
+    register: result
+    until: result is succeeded
+
+  - name: Download CNI Plugin archive
+    get_url:
+      url: "https://github.com/containernetworking/plugins/releases/download/v{{ cni_plugin__version }}/cni-plugins-linux-amd64-v{{ cni_plugin__version }}.tgz"
+      dest: "{{ cni_plugin__download_dir }}"
+    register: result
+    until: result is succeeded
+
+  - name: Expand CNI Plugin archive
+    unarchive:
+      src: "{{ cni_plugin__download_dir }}/cni-plugins-linux-amd64-v{{ cni_plugin__version }}.tgz"
+      dest: "{{ cni_plugin__download_dir }}"
+      remote_src: yes
+    register: result
+    until: result is succeeded
+
+  - name: Remove CNI Plugin archive
+    file:
+      path: "{{ cni_plugin__download_dir }}/cni-plugins-linux-amd64-v{{ cni_plugin__version }}.tgz"
+      state: absent
+    register: result
+    until: result is succeeded
+
+  when: opt_cni_bin.stat.exists == False

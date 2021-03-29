@@ -1,0 +1,25 @@
+sysctl_file_path: /etc/sysctl.d/99-kubernetes-cri.conf
+
+crio__kernel_module_dependency:
+  - overlay
+  - br_netfilter
+
+crio__kernel_parameter:
+  - net.bridge.bridge-nf-call-iptables
+  - net.bridge.bridge-nf-call-ip6tables
+  - net.ipv4.ip_forward
+
+# CRI-O Configration
+crio__version: "1.20"
+crio__debian_version: "xUbuntu_18.04"
+crio__packages:
+  - cri-o
+  - cri-o-runc
+  - skopeo
+
+# CNI plugin Configration
+cni_plugin__version: "0.9.1"
+cni_plugin__download_dir: /opt/cni/bin
+
+# crictl Confgiration
+crictl__version: "1.20.0"

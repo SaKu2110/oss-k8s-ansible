@@ -1,2 +1,5 @@
+---
+k8s__role: "master"
+
 k8s_ctrl_user__name: k8sctrl
 k8s_ctrl_user__password: passw0rd

@@ -1,0 +1,24 @@
+---
+- name: Import CRI-O repository
+  import_tasks: repository.yml
+
+- name: Install CRI-O
+  apt:
+    pkg: "{{ crio__packages }}"
+    state: present
+    update_cache: yes
+  register: result
+  until: result is succeeded
+
+- name: Disable metacopy option
+  lineinfile:
+    path: /etc/containers/storage.conf
+    regexp: '^mountopt = '
+    line: mountopt = "nodev"
+  register: result
+  until: result is succeeded
+  notify:
+    - restart_crio
+
+- name: flush_handlers and reload-systemd
+  meta: flush_handlers

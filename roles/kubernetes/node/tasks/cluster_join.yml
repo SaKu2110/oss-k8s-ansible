@@ -1,0 +1,31 @@
+---
+- name: Check if k8s cluster has already join
+  stat:
+    path: /etc/kubernetes/kubelet.conf
+  register: kubernetes_already_join
+
+- name: Check if cluster join shell exists
+  find:
+    paths: "{{ playbook_dir }}/roles/kubernetes/node/files"
+    patterns: 'k8s_join_*.sh'
+    file_type: file
+  become: no
+  delegate_to: localhost
+  register: cluster_join_shell
+
+- block:
+  - name: Place file to join kubernetes cluster
+    copy:
+      src: "k8s_join_{{ lookup('pipe','date +%Y%m%d') }}.sh"
+      dest: "/etc/kubernetes/k8s_join_{{ lookup('pipe','date +%Y%m%d') }}.sh"
+      mode: '0755'
+    register: result
+    until: result is succeeded
+
+  - name: Join kubernetes Cluster
+    shell:
+      cmd: "/etc/kubernetes/k8s_join_{{ lookup('pipe','date +%Y%m%d') }}.sh"
+    register: result
+    until: result is succeeded
+
+  when: cluster_join_shell.matched > 0 and kubernetes_already_join.stat.exists == False
