@@ -32,3 +32,6 @@ CNI
 - `ansible-playbook -i inventory/production cluster.yml`
 
 ※inventory/productionは自分で記述する必要があり
+
+### 資料
+勉強会の資料：https://docs.google.com/presentation/d/17JKUo9ZlOC9lnGpFw0s7AdcMchLRB6UTCOfzxPPhInk/edit?usp=sharing
